@@ -1,38 +1,30 @@
-
 import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min";
-import Header from './Components/Header/Header';
-import Product from './Components/Products/Product';
-import Signin from './Components/Signin/Signin';
-import Signup from './Components/Signup/Signup';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Errorpage from './Components/errorpage/Errorpage';
-
-
+import SignIn from './components/sign-in/SignIn';
+import SignUp from './components/sign-up/SignUp';
+import PageNotFound from './components/page-not-found/PageNotFound';
+import Header from './components/Layout/Header';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 function App() {
   const router = createBrowserRouter([
-    {
-      path:"/",
-      element: < Header/>,errorElement:<Errorpage
-      />
-    },
-    
-    {
-      path:"/Signin",element: <Signin/>
-    },{
-      path:"/Signup",
-      element: <Signup/>
-    }
-  ])
+    {  path: "/", element: <Header />,
+       errorElement: <PageNotFound />  },
+    { 
+       path: "/sign-in", element: <SignIn /> 
+       },
+    { 
+       path: "/sign-up", element: <SignUp />
+       },
+  ]);
   return (
-    <div >
-      {/* < Header/> */}
-  {/* < Product/>
-  <Signin/>
-  <Signup/> */}
-  <RouterProvider router={router} />
+    <div className="App">
+      <Provider store={store}>
+              <RouterProvider router={router} />
+
+      </Provider>
     </div>
   );
 }
