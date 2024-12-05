@@ -8,7 +8,7 @@ import {
 import React, { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import logo from "../assets/signup-g.svg";
+
 import { Controller,  useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -45,7 +45,7 @@ console.log(errors, 'errors');
         <Box className="container-fluid mt-5">
           <Box className="d-flex justify-content-around align-items-center flex-wrap">
             <Box>
-              <img src={logo} className="img-fluid" alt="" />
+             
             </Box>
               <Box>
               <Box className="text-start">

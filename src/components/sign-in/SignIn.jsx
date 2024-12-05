@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
-import logo from "../assets/signin-g.svg";
+
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -38,7 +38,7 @@ const SignIn = () => {
       <Box className="container mt-5">
         <Box className="d-flex justify-content-around align-items-center flex-wrap mt-5">
           <Box>
-            <img src={logo} alt="Logo" />
+          
           </Box>
           <form onSubmit={handleSubmit((data) => {
             console.log(data);
