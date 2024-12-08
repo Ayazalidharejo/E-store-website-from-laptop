@@ -7,6 +7,7 @@ import PageNotFound from './components/page-not-found/PageNotFound';
 import Header from './components/Layout/Header';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import ProductDetails from './components/ProductDetails/ProductDetails';
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,9 @@ function App() {
        },
     { 
        path: "/sign-up", element: <SignUp />
+       },
+    { 
+       path: "/ProductDetails/:product_id", element: <ProductDetails />
        },
   ]);
   return (

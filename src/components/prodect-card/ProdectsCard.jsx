@@ -7,46 +7,48 @@ import {
   Grid,
   Rating,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const ProdectsCard = () => {
-  const [filterCategories , setFilterCategories] = useState()
+
+  const [Updatearry,setUpdatearry]=useState([])
   const [Products, setProducts] = useState([]);
   const [isLoad , setLoad] = useState(true)
   const [categoryArr , setCategory] = useState([])
   console.log(Products, "products");
 
   const filterProducts = (categoryProduct) => {
-    const filterCategory = Products.filter((item) => item.category.name === categoryProduct.value)
+    const filterCategory = Products.filter((item) => item.category === categoryProduct.value)
 
-    setFilterCategories(filterCategory)
-    console.log(filterCategory , "filterCAtegory");
-    
+    setUpdatearry(filterCategory)
+   
   }
 
   useEffect(() => {
     const ProduCards = axios
-      .get("https://api.escuelajs.co/api/v1/products")
+      .get("https://fakestoreapi.com/products")
       .then((data) => {
-        const FilterData = data.data.filter(
-          (Products) => Products.title !== "New Product"
-        );
+       
+       
 
-        const categoryArr = FilterData.map((item) => {
+        const categoryArr = data?.data?.map((item) => {
           return {
-            label : item.category.name,
-            value : item.category.name
+            label : item.category,
+            value : item.category
           }
         }) 
 
@@ -54,9 +56,12 @@ const ProdectsCard = () => {
         console.log(categoryArr ,  "category");
         
         setCategory(uniqueArr)
-        setProducts(FilterData);
-        setFilterCategories(FilterData);
+        setProducts(data.data);
+        setUpdatearry(data.data);
+      
         setLoad(false)
+        
+        
       
 
       });
@@ -66,26 +71,29 @@ const ProdectsCard = () => {
 
 
   return (
-    <>
-      <Grid container spacing={3} className="mt-5 ms-5">
-   <Box className="mt-5 ">
+    <div className="mt-5">
+       <Box  >
    <Autocomplete
       disablePortal
       options={categoryArr}
       sx={{ width: 300 }}
       onChange={(e, newValue) => {
+       
+        
       filterProducts(newValue);
         
       }}
-      renderInput={(params) => <TextField {...params} label="Category" />}
+      renderInput={(params) => <TextField className="mt-5" {...params} label="Category" />}
     />
    </Box>
+      <Grid container >
+
         { isLoad ? <Box className="my-5 w-100 text-center">
           <CircularProgress size="3rem" />
         </Box> :
-        filterCategories?.map((product) => (
-          <Grid item sm={2}>
-            <Card key={product.id} className="text-center px-3 m-3 ">
+       Updatearry?.map((product) => (
+          <Grid item sm={2} md={3} sx={3}>
+            <Card style={{minHeight:"380px",maxHeight:"380px"}}  className="text-center px-3 m-3 ">
               <Swiper
                 spaceBetween={30}
                 centeredSlides={true}
@@ -100,57 +108,59 @@ const ProdectsCard = () => {
                 modules={[Autoplay, Pagination, Navigation]}
                 className="mySwiper"
               >
-                {product?.images.map((img) => {
-                  return (
+              
                     <SwiperSlide>
-                      <img
-                        src={img}
-                        className="img-fluid"
+                      <img style={{maxHeight:"220px",minHeight:"220px",minWidth:"220px",maxWidth:"220px"}}
+                        src={product.image}
+                    
                         alt={product.title}
                       />
                     </SwiperSlide>
-                  );
-                })}
+                    <SwiperSlide>
+                      <img style={{maxHeight:"220px",minHeight:"220px",minWidth:"220px",maxWidth:"220px"}}
+                        src={product.image}
+                    
+                        alt={product.title}
+                      />
+                    </SwiperSlide>
+                 
 
-                <SwiperSlide>
-                  <img
-                    src={product?.images[0]}
-                    className="img-fluid"
-                    alt={product.title}
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img
-                    src={product?.images[0]}
-                    className="img-fluid"
-                    alt={product.title}
-                  />
-                </SwiperSlide>
+               
+                
               </Swiper>
               <Box className="text-start">
                 <Typography variant="body2" className="mt-2 text-start">
                   {product?.category?.name}
                 </Typography>
+                <Tooltip title={product.title} placement="top">
                 <Typography variant="h6" className="mt-2 text-start">
-                  {product?.title}
+                  {product?.title?.length>20? product.title.slice(0,20): product.title}
                 </Typography>
+                </Tooltip>
                 <Rating
                   name="read-only"
-                  value={Math.round(product?.rating) || 0}
+                  value={Math.round(product?.rating?.rate) || 0}
                   readOnly
                 />
                 <Typography variant="h6" className="tex">
                   ${product?.price}
                 </Typography>
+              <Box className="d-flex justify-content-between">  
+
+              <Tooltip title="View details">
+                <Link to= {`/ProductDetails/${product?.id}`} >
+                <Button >  <VisibilityIcon/> </Button>
+                </Link>
+                </Tooltip>
                 <Button className="my-3" variant="contained">
                   <AddIcon /> Add
-                </Button>
+                </Button> </Box>
               </Box>
             </Card>
           </Grid>
         ))}
       </Grid>
-    </>
+    </div>
   );
 };
 
