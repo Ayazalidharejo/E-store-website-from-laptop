@@ -128,13 +128,13 @@ const ProdectsCard = () => {
                
                 
               </Swiper>
-              <Box className="text-start">
+              <Box >
                 <Typography variant="body2" className="mt-2 text-start">
                   {product?.category?.name}
                 </Typography>
                 <Tooltip title={product.title} placement="top">
-                <Typography variant="h6" className="mt-2 text-start">
-                  {product?.title?.length>20? product.title.slice(0,20): product.title}
+                <Typography variant="h6" className="mt-2 ">
+                  {product?.title?.length>20? `${product.title.slice(0,20)}...`: product.title}
                 </Typography>
                 </Tooltip>
                 <Rating
