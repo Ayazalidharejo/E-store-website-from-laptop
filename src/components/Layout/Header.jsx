@@ -37,7 +37,7 @@ function Header(props: Props) {
   const open = Boolean(anchorEl);
 
   const [openItems, setOpenItems] = React.useState(false);
-  const {count} = useSelector((state)=> state.counter)
+  const {Cartitem} = useSelector((state)=> state.Cart)
   // console.log(ItemCounter , "ItemCounter");
   
   const toggleOpenItems = (newOpen) => () => {
@@ -104,7 +104,7 @@ function Header(props: Props) {
             ))}
 
             <Button>
-              <Badge badgeContent={count} color="error">
+              <Badge badgeContent={Cartitem?.length} color="error">
                  <ShoppingCartIcon onClick={toggleOpenItems(true)} className="text-white" />
               </Badge>
               

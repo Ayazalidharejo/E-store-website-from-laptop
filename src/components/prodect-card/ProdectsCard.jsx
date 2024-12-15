@@ -22,6 +22,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Addtocart } from "../Slices/Cart/Cart";
 
 const ProdectsCard = () => {
 
@@ -29,7 +31,7 @@ const ProdectsCard = () => {
   const [Products, setProducts] = useState([]);
   const [isLoad , setLoad] = useState(true)
   const [categoryArr , setCategory] = useState([])
-  console.log(Products, "products");
+  const dispach =useDispatch()
 
   const filterProducts = (categoryProduct) => {
     const filterCategory = Products.filter((item) => item.category === categoryProduct.value)
@@ -53,7 +55,7 @@ const ProdectsCard = () => {
         }) 
 
         const uniqueArr = categoryArr.filter((item,index,self) => index === self.findIndex((t) => t.value === item.value)) 
-        console.log(categoryArr ,  "category");
+       
         
         setCategory(uniqueArr)
         setProducts(data.data);
@@ -152,7 +154,7 @@ const ProdectsCard = () => {
                 <Button >  <VisibilityIcon/> </Button>
                 </Link>
                 </Tooltip>
-                <Button className="my-3" variant="contained">
+                <Button onClick={()=>dispach(Addtocart(product))} className="my-3" variant="contained">
                   <AddIcon /> Add
                 </Button> </Box>
               </Box>
