@@ -14,10 +14,11 @@ import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Password } from "@mui/icons-material";
+import axios from "axios";
 
 // Validation schema
 const SignUpchema = yup.object({
-  firstName: yup.string().required('First name is required'),
+  email: yup.string().required('First name is required'),
   Password: yup.string().required('Password is required'),
 });
 
@@ -25,13 +26,18 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
-      firstName: "",
+      email: "",
       Password: "",
     },
     resolver: yupResolver(SignUpchema),
   });
  
-  
+ const Singinhandler=(data)=>{
+
+const resp =axios.post("https://api.escuelajs.co/api/v1/auth/login",data)
+console.log(resp,"resp");
+
+ } 
   
   return (
     <>
@@ -40,9 +46,7 @@ const SignIn = () => {
           <Box>
           
           </Box>
-          <form onSubmit={handleSubmit((data) => {
-            console.log(data);
-          })}>
+          <form onSubmit={handleSubmit((data) => Singinhandler(data))}>
             <Box>
               <Typography variant="h5" className="text-start">
                 Sign in to FreshCart
@@ -53,7 +57,7 @@ const SignIn = () => {
 
               <Box>
                 <Controller
-                  name="firstName"
+                  name="email"
                   control={control}
                   render={({ field }) => (
                     <TextField
@@ -63,7 +67,7 @@ const SignIn = () => {
                       className="my-2"
                       fullWidth
                       type="text"
-                      placeholder="First name"
+                      placeholder="E mail"
                     />
                   )}
                 />

@@ -1,9 +1,10 @@
-import { Grid, Rating } from '@mui/material'
+import { Button, Grid, Rating } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import SkeltingDetail from './SkeltingDetail'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Addtocart } from '../Slices/Cart/Cart'
 
 const ProductDetails = () => {
     const {product_id} =useParams()
@@ -13,7 +14,7 @@ const ProductDetails = () => {
     console.log(Cartitem ,"wish");
     const [productdetail,setproductdetail]=useState({})
     console.log(product);
-    
+    const Dispach =useDispatch()
     
     useEffect(()=>{
 
@@ -30,6 +31,7 @@ const ProductDetails = () => {
       setproductdetail(renderproduct)
     },[Cartitem])
     
+    const isExis = Cartitem?.find(item=>item.id ==product_id)
   return (
     <>
 {load?<SkeltingDetail/>:  <Grid container className=' d-flex align-items-center container mt-5'>
@@ -60,17 +62,18 @@ const ProductDetails = () => {
 <h2>
 {product.price}
 </h2> <br />
-<h2>
+{isExis&& <h2 className='d-flex justify-content-between'>
 QTY:{productdetail?.quanitity}
-</h2> <br />
+
+
+</h2> }<br />
 <Rating
                 name="read-only"
                 value={Math.round(product?.rating?.rate) || 0}
                 readOnly
               />
 
-
-
+<Button onClick={()=>(Dispach(Addtocart(product)))} variant='contained'> Add</Button>
 </Grid>
 
 
