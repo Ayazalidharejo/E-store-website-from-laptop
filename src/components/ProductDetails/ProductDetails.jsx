@@ -1,7 +1,7 @@
 import { Button, Grid, Rating } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router-dom'
 import SkeltingDetail from './SkeltingDetail'
 import { useDispatch, useSelector } from 'react-redux'
 import { Addtocart } from '../Slices/Cart/Cart'

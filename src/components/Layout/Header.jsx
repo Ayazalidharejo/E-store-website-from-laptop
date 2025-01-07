@@ -16,7 +16,7 @@ import Button from "@mui/material/Button";
 import ProdectsCard from "../prodect-card/ProdectsCard";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Badge, Menu, MenuItem } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, Outlet,  } from "react-router-dom";
 import DrawerItems from "../Drawer/DrawerItems";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useSelector } from "react-redux";
@@ -163,9 +163,11 @@ function Header(props: Props) {
         >
           {drawer}
         </Drawer>
+       
       </nav>
-      <ProdectsCard />
+      
       <DrawerItems openItems={openItems} toggleOpenItems={toggleOpenItems} />
+<Outlet/>
     </Box>
   );
 }

@@ -8,7 +8,7 @@ import {
 import React, { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -17,12 +17,14 @@ import { Password } from "@mui/icons-material";
 import axios from "axios";
 
 // Validation schema
+
 const SignUpchema = yup.object({
   email: yup.string().required('First name is required'),
   Password: yup.string().required('Password is required'),
 });
 
 const SignIn = () => {
+  const navigate =useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -32,12 +34,32 @@ const SignIn = () => {
     resolver: yupResolver(SignUpchema),
   });
  
- const Singinhandler=(data)=>{
-
-const resp =axios.post("https://api.escuelajs.co/api/v1/auth/login",data)
-console.log(resp,"resp");
-
- } 
+  const Singinhandler = async (data) => {
+    try {
+      const formattedData = {
+        email: data.email,
+        password: data.Password, 
+      };
+  
+      const resp = await axios.post("https://api.escuelajs.co/api/v1/auth/login", formattedData);
+  
+      // Assuming the token is returned as 'access_token' in the response data
+      const accessToken = resp.data.access_token; 
+  
+      if (accessToken) {
+        localStorage.setItem("token", accessToken); // Save the token to localStorage
+        navigate("/")
+      } else {
+        alert("you don't haeve accesee")
+      }
+    } catch (error) {
+      console.error(
+        error.response ? error.response.data : error.message,
+        "Error"
+      );
+    }
+  };
+  
   
   return (
     <>
