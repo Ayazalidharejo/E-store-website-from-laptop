@@ -170,8 +170,7 @@ const ProdectsCard = () => {
           </Grid>
         ))}
       </Grid>
-      <Box className="d-flex justify-content-center my-4">   <PaginationMUI onChange={(e,value)=>{Setcurrentpage(value);
-      }} count={Totalpage} shape="rounded" /> </Box>
+    <Box className="d-flex justify-content-center my-4">   <PaginationMUI onChange={(e,value)=>{Setcurrentpage(value)}} count={Totalpage} shape="rounded" /> </Box>
     </div>
   );
 };
