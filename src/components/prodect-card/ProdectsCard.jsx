@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import PaginationMUI from '@mui/material/Pagination';
 
 // Import Swiper styles
 import "swiper/css";
@@ -72,6 +73,13 @@ const ProdectsCard = () => {
   }, []);
 
 
+  const [currentpage ,Setcurrentpage]=useState(1)
+  const parpageitem =10;
+
+ const  Totalpage = Math.ceil(Updatearry.length/parpageitem)
+  console.log(Totalpage);
+  
+
   return (
     <div className="mt-5">
        <Box  >
@@ -93,7 +101,7 @@ const ProdectsCard = () => {
         { isLoad ? <Box className="my-5 w-100 text-center">
           <CircularProgress size="3rem" />
         </Box> :
-       Updatearry?.map((product) => (
+       Updatearry?.slice((currentpage -1)*parpageitem,currentpage*parpageitem).map((product) => (
           <Grid item sm={2} md={3} sx={3}>
             <Card style={{minHeight:"380px",maxHeight:"380px"}}  className="text-center px-3 m-3 ">
               <Swiper
@@ -162,6 +170,8 @@ const ProdectsCard = () => {
           </Grid>
         ))}
       </Grid>
+      <Box className="d-flex justify-content-center my-4">   <PaginationMUI onChange={(e,value)=>{Setcurrentpage(value);
+      }} count={Totalpage} shape="rounded" /> </Box>
     </div>
   );
 };

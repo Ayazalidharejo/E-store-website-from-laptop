@@ -32,11 +32,15 @@ const SignIn = () => {
     resolver: yupResolver(SignUpchema),
   });
  
- const Singinhandler=(data)=>{
+ const Singinhandler= (data) => {
+console.log(data);
 
-const resp =axios.post("https://api.escuelajs.co/api/v1/auth/login",data)
-console.log(resp,"resp");
+  const signInUser =async () =>{
+    const resp =axios.post("https://api.escuelajs.co/api/v1/auth/login",data)
+    console.log(resp,"resp");
+  }
 
+  signInUser()
  } 
   
   return (
@@ -61,7 +65,7 @@ console.log(resp,"resp");
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      error={!!errors.firstName}
+                      error={!!errors.email}
                       {...field}
                       size="small"
                       className="my-2"

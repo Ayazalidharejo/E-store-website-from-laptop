@@ -14,11 +14,14 @@ const DrawerItems = (props) => {
    const {Cartitem} = useSelector((state)=> state.Cart)
    const usedispach =useDispatch()
    console.log(Cartitem);
+   const Totalprice =Cartitem.reduce((acc,sum)=>sum.price *sum.quanitity +acc,0)
+   console.log(Totalprice);
+   
    
   return (
     <>
           <Drawer open={openItems} onClose={toggleOpenItems(false)}>
-            <Box sx={{width:"350px"}}>
+            <Box className="position-relative" sx={{width:"350px", height:"97vh"}}>
                 <h1>cartItems</h1>
                 {Cartitem && Cartitem.map((item)=>{
   return(
@@ -29,7 +32,7 @@ const DrawerItems = (props) => {
     
     <Typography> {item.title.length>15? `${item.title.slice(0,15)}...`:item.title} </Typography>
     <Typography> {item.category} </Typography>
-    <Typography> {item.price} <span>Qty: {item?.quanitity} </span> </Typography>
+    <Typography>Price ${item.price} <span>Qty: {item?.quanitity} </span> </Typography>
     </Box>
     </div>
     <Box className="col-3 pe-4" >
@@ -38,10 +41,13 @@ const DrawerItems = (props) => {
 <Button variant='outlined' className='ms-5'> <DeleteIcon onClick={()=> (usedispach(Delete(item)))}/></Button>
 
     </Box>
+    <Button className='position-absolute bottom-0' variant='contained' fullWidth>  totalprice ${Totalprice} </Button>
     </div>
   )
 })} 
             </Box>
+   
+
           </Drawer>
 
     </>
