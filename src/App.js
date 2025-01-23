@@ -60,7 +60,9 @@ function App() {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Header />, // Header wraps all child routes
+    element:  <ProtectRounte>
+    <Header />
+  </ProtectRounte>, // Header wraps all child routes
     children: [
       {
         path: "",

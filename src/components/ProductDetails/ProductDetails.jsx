@@ -35,7 +35,7 @@ const ProductDetails = () => {
   return (
     <>
 {load?<SkeltingDetail/>:  <Grid container className=' d-flex align-items-center container mt-5'>
-<Grid item sx={4} md={6}>
+<Grid item sx={4} md={6} className='mt-5'>
 
 
 
