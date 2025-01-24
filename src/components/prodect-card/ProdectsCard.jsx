@@ -16,6 +16,8 @@ import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import PaginationMUI from '@mui/material/Pagination';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 // Import Swiper styles
 import "swiper/css";
@@ -25,6 +27,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { Addtocart } from "../Slices/Cart/Cart";
+import DeleteProduct from "../DeleteProduct/DeleteProduct";
 
 const ProdectsCard = () => {
 
@@ -40,6 +43,7 @@ const ProdectsCard = () => {
     setUpdatearry(filterCategory)
    
   }
+  const {DeleteProducts}=DeleteProduct()
 
   useEffect(() => {
     const ProduCards = axios
@@ -155,12 +159,17 @@ const ProdectsCard = () => {
                 <Typography variant="h6" className="tex">
                   ${product?.price}
                 </Typography>
-              <Box className="d-flex justify-content-between">  
+              <Box className="d-flex justify-content-center">  
 
               <Tooltip title="View details">
                 <Link to= {`/ProductDetails/${product?.id}`} >
-                <Button >  <VisibilityIcon/> </Button>
+                <Button className="pt-4">  <VisibilityIcon/> </Button>
                 </Link>
+                </Tooltip>
+              <Tooltip title="Delete">
+               
+                <Button onClick={()=>DeleteProducts(product?.id)}>  <DeleteIcon/> </Button>
+              
                 </Tooltip>
                 <Button onClick={()=>dispach(Addtocart(product))} className="my-3" variant="contained">
                   <AddIcon /> Add
@@ -171,6 +180,7 @@ const ProdectsCard = () => {
         ))}
       </Grid>
     <Box className="d-flex justify-content-center my-4">   <PaginationMUI onChange={(e,value)=>{Setcurrentpage(value)}} count={Totalpage} shape="rounded" /> </Box>
+    <ToastContainer />
     </div>
   );
 };
